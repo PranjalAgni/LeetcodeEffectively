@@ -28,7 +28,7 @@ class Solution {
         }
 
         if (currNode != NULL) {
-            head->next = reverseInKBatch(currNode, K, len - K);
+            head->next = reverseInKBatch(currNode, K, groupSize);
         }
 
         return newHead;
