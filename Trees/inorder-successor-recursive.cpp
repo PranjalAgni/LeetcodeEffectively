@@ -1,6 +1,5 @@
-// Time: O(H) | Space: O(1)
+// Time: O(H) | Space: O(H)
 // H height of BST
-// No auxillary space
 void inorderSuccessor(Tree* root, int t, int& ans, bool& isFound) {
     if (root == NULL) return;
     inorderSuccessor(root->left, t, ans, isFound);
