@@ -1,3 +1,4 @@
+// run length encoding problem
 string solve(string s) {
     int len = s.length();
     string answer = "";
