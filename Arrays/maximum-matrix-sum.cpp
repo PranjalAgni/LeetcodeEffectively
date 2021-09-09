@@ -1,5 +1,6 @@
 class Solution {
    public:
+    // Time: O(rows * cols) | Space: O(1)
     long long maxMatrixSum(vector<vector<int>>& matrix) {
         int rows = matrix.size();
         int cols = matrix[0].size();
