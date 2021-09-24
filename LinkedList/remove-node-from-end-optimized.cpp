@@ -1,6 +1,7 @@
 
 class Solution {
    public:
+    // Time: O(N) | Space: O(1)
     ListNode* removeNthFromEnd(ListNode* head, int n) {
         ListNode* newHead = new ListNode(-1);
         newHead->next = head;
