@@ -61,6 +61,9 @@ bool isCycleExist(vector<int>& jobs, unordered_map<int, vector<int>>& graph) {
     return false;
 }
 
+// Time: O(V + E) | Space: O(V + E)
+// V = number of verticies (job)
+// E = number of edges
 vector<int> topologicalSort(vector<int> jobs, vector<vector<int>> deps) {
     unordered_map<int, vector<int>> graph = buildGraph(jobs, deps);
     bool isCycle = isCycleExist(jobs, graph);
