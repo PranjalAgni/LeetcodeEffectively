@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/insertion-sort-list
+
 class Solution {
 private:
   vector<int> getVectorFromList(ListNode* head) {
@@ -8,13 +10,28 @@ private:
     }
     
     return nums;
-  }  
+  }
+
+  void insertionSort(vector<int>& nums) {
+    int N = nums.size();
+    for (int idx = 1; idx < N; idx++) {
+      int current = nums[idx];
+      int jdx = idx - 1;
+
+      while (jdx >= 0 && nums[jdx] > current) {
+        nums[jdx + 1] = nums[jdx];
+        jdx -= 1;
+      }
+
+      nums[jdx + 1] = current;
+    }
+  }
 public:
-    // Time: O(N * log(N)) | Space: O(N)
+    // Time: O(N * N) | Space: O(N)
     ListNode* insertionSortList(ListNode* head) {
         if (!head) return head;
         vector<int> nums = getVectorFromList(head);
-        sort(nums.begin(), nums.end());
+        insertionSort(nums);
         ListNode* temp = head;
         int pos = 0;
         while (temp != NULL) {
