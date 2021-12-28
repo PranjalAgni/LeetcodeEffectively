@@ -12,6 +12,7 @@ private:
     return true;
   }
 public:
+    // Time: O(N) | Space: O(N)
     int countGoodSubstrings(string s) {
         int left = 0;
         int right = 0;
