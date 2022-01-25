@@ -19,30 +19,30 @@ public:
 		this->keys.push_back(key);
 	}
 	
-	// Time: O(N) | Space: O(N)
-  void insertKeyValuePair(string key, int value) {
-		int currentSize = this->keys.size();
-		
-		// if size of LRU cache is full
-		if (currentSize == this->maxSize) {
-			string expiredKey = this->keys.front();
-			this->keysVsValueMap.erase(expiredKey);
-			this->keys.remove(expiredKey);		
-		}
-		
-		addKeyToSet(key);
-    this->keysVsValueMap[key] = value;
-  }
+    // Time: O(N) | Space: O(N)
+    void insertKeyValuePair(string key, int value) {
+        int currentSize = this->keys.size();
+
+        // if size of LRU cache is full
+        if (currentSize == this->maxSize) {
+            string expiredKey = this->keys.front();
+            this->keysVsValueMap.erase(expiredKey);
+            this->keys.remove(expiredKey);		
+        }
+        
+        addKeyToSet(key);
+        this->keysVsValueMap[key] = value;
+    }
 
 	// Time: O(N) | Space: O(1)
-  int *getValueFromKey(string key) {
+    int *getValueFromKey(string key) {
 		if (this->keysVsValueMap.find(key) == this->keysVsValueMap.end()) return nullptr;
 		addKeyToSet(key);
 		return &this->keysVsValueMap[key];
-  }
+    }
 
-	// Time: O(1) | Space: O(N)
-  string getMostRecentKey() {
-		return this->keys.back();
-  }
+    // Time: O(1) | Space: O(N)
+    string getMostRecentKey() {
+	   return this->keys.back();
+    }
 };
