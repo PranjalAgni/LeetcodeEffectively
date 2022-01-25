@@ -3,7 +3,7 @@ using namespace std;
 
 class LRUCache {
 public:
-  int maxSize;
+    int maxSize;
 	list<string> keys;		
 	unordered_map<string, int> keysVsValueMap;
     LRUCache(int maxSize) { 
@@ -13,10 +13,11 @@ public:
 	}
 	
 	// Time: O(N) | Space: O(N)
-	void addKeyToSet(string key) {
+	void addKeyAndUpdateRecency(string key) {
+	    this->keys.resize(this->maxSize);
 		int countVal = count(this->keys.begin(), this->keys.end(), key);
 		if (countVal > 0) this->keys.remove(key);
-		this->keys.push_back(key);
+		this->keys.push_front(key);
 	}
 	
     // Time: O(N) | Space: O(N)
@@ -25,24 +26,23 @@ public:
 
         // if size of LRU cache is full
         if (currentSize == this->maxSize) {
-            string expiredKey = this->keys.front();
+            string expiredKey = this->keys.back();
             this->keysVsValueMap.erase(expiredKey);
-            this->keys.remove(expiredKey);		
         }
         
-        addKeyToSet(key);
+        addKeyAndUpdateRecency(key);
         this->keysVsValueMap[key] = value;
     }
 
 	// Time: O(N) | Space: O(1)
     int *getValueFromKey(string key) {
 		if (this->keysVsValueMap.find(key) == this->keysVsValueMap.end()) return nullptr;
-		addKeyToSet(key);
+		addKeyAndUpdateRecency(key);
 		return &this->keysVsValueMap[key];
     }
 
     // Time: O(1) | Space: O(N)
     string getMostRecentKey() {
-	   return this->keys.back();
+	   return this->keys.front();
     }
 };
