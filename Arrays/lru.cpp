@@ -6,7 +6,7 @@ public:
   int maxSize;
 	list<string> keys;		
 	unordered_map<string, int> keysVsValueMap;
-  LRUCache(int maxSize) { 
+    LRUCache(int maxSize) { 
 		this->maxSize = maxSize > 1 ? maxSize : 1;
 		this->keys = list<string>();
 		this->keysVsValueMap = unordered_map<string, int>();
