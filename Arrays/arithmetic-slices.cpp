@@ -9,7 +9,7 @@ public:
       int totalSlices = 0;
       int currentSlice = 0;
       int N = nums.size();
-      for (inst idx = 2; idx < N; idx++) {
+      for (int idx = 2; idx < N; idx++) {
         if (nums[idx] - nums[idx - 1] == nums[idx - 1] - nums[idx - 2]) {
           currentSlice += 1;
           totalSlices += currentSlice;
