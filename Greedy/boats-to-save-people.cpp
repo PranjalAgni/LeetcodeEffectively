@@ -1,33 +1,23 @@
 // https://leetcode.com/problems/boats-to-save-people/
+
 class Solution {
 public:
-    void printVector(vector<int>& vec) {
-      for (int elt: vec) cout << elt << " ";
-      cout << endl;
-      return;
-    }
-  
-    void numRescueBoatsRec(vector<int>& people, int idx, int& N, int& limit, set<vector<int>>& hashSet, vector<int> current, int sum) {
-      if (idx >= N) return;
-      
-      numRescueBoatsRec(people, idx + 1, N, limit, hashSet, current, sum);
-      if (current.size() < 2) {
-        sum += people[idx];
-        current.push_back(people[idx]);
-      }
-      if (sum <= limit) {
-        printVector(current);
-        hashSet.insert(current);
-      }
-      
-      numRescueBoatsRec(people, idx + 1, N, limit, hashSet, current, sum);
-    }
-  
+    // Time: O(N*logN) | Space: O(1)
     int numRescueBoats(vector<int>& people, int limit) {
-        sort(people.begin(), people.end());
-        int N = people.size();
-        set<vector<int>> hashSet;
-        numRescueBoatsRec(people, 0, N, limit, hashSet, {}, 0);
-        return hashSet.size();
+        // sort people in descending order
+        sort(people.rbegin(), people.rend());
+        int N = people.size();  
+        int left = 0;
+        int right = N - 1;
+        
+        // 1. Try to pair heaviest person with lightest
+        // 2. If weight exceeds the limit then heaviest person will go alone
+        // 3. left stores our answer as it contains the count till how many people we can fit in boat 
+        while (left <= right) {
+          if (people[left] + people[right] <= limit) right -= 1;
+          left += 1;
+        }
+      
+        return left;
     }
 };
