@@ -7,7 +7,7 @@ public:
         long long MOD = 1e9 + 7;
         unordered_map<int, int> hashMap;
         for (int idx = 0; idx < N; idx++) {
-          ans += hashMap[target - arr[idx]] % MOD;
+          ans = (ans + hashMap[target - arr[idx]]) % MOD;
           for (int jdx = 0; jdx < idx; jdx++) hashMap[arr[idx] + arr[jdx]] += 1;
         }
       
