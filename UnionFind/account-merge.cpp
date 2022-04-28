@@ -1,4 +1,5 @@
 // https://leetcode.com/problems/accounts-merge/
+
 class Solution {
 private:
     int find(vector<int>& parent, int idx) {
@@ -7,10 +8,6 @@ private:
         parent[idx] = find(parent, parent[idx]);
         return parent[idx];
       }
-    }
-  
-    void unionDS(vector<int>& parent, int x, int y) {
-      parent[y] = parent[x];
     }
 public:
     // Time: O(N*logN) | Space: O(N)
@@ -31,7 +28,9 @@ public:
               emailVsParentIdxMap[email] = idx;
             } else {
               int parentIdx = emailVsParentIdxMap[email];
-              unionDS(parentList, find(parentList, parentIdx), find(parentList, idx));
+              int x = find(parentList, parentIdx);
+              int y = find(parentList, idx);
+              parentList[x] = parentList[y];
             }
           }
         }
