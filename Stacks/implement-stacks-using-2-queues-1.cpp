@@ -1,14 +1,18 @@
+// https://leetcode.com/problems/implement-stack-using-queues/
+
 class MyStack {
    public:
     /** Initialize your data structure here. */
     queue<int> firstQueue;
     queue<int> secondQueue;
+    // Time: O(1) | Space: O(N)
     MyStack() {
         firstQueue = queue<int>();
         secondQueue = queue<int>();
     }
 
     /** Push element x onto stack. */
+    // Time: O(N) | Space: O(1)
     void push(int x) {
         while (!firstQueue.empty()) {
             int val = firstQueue.front();
@@ -25,6 +29,7 @@ class MyStack {
     }
 
     /** Removes the element on top of the stack and returns that element. */
+    // Time: O(1) | Space: O(1)
     int pop() {
         int top = firstQueue.front();
         firstQueue.pop();
