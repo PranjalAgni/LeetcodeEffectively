@@ -1,6 +1,7 @@
 // https://leetcode.com/problems/deepest-leaves-sum/
 
 // Structure to hold node information
+// Stores the current height and node value
 struct NodeInfo {
   int height;
   int val;
