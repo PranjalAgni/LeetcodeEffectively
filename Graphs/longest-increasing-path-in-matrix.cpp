@@ -8,7 +8,7 @@ private:
       return true;
     }
     
-    // Implementing DFS
+    // Implementing DFS solution
     // Time: O(rows * cols) | Space: O(rows * cols)
     int dfs(vector<vector<int>>& matrix, int row, int col, int& rows, int& cols, vector<vector<int>>& dp) {
       if (dp[row][col]) return dp[row][col];
