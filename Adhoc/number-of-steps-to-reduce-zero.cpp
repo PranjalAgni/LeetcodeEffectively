@@ -2,6 +2,8 @@
 
 class Solution {
 // Time: O(N) | Space: O(1)
+ // Based on odd and even
+
 public:
     int numberOfSteps(int num) {
       int steps = 0;
