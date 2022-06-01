@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/missing-number/
 
-// Simple solution based on sum of n numbers (AP)
+// Simple solution based on sum of n numbers (AP: arithmetic progression)
 class Solution {
 public:
     // Time: O(N) | Space: O(1)
