@@ -1,5 +1,6 @@
 // https://leetcode.com/problems/maximum-erasure-value/
 
+// Sliding window approach
 class Solution {
 private:
     vector<int> getPrefixSum(vector<int>& nums) {
@@ -14,6 +15,7 @@ private:
       return prefixSum;
     }
 public:
+    // Time: O(N) | Space: O(N)
     int maximumUniqueSubarray(vector<int>& nums) {
         int N = nums.size();
         vector<int> prefixSum = getPrefixSum(nums);
@@ -27,8 +29,10 @@ public:
           int curr = nums[right];
           if (hashMap.find(curr) != hashMap.end()) {
             int duplicateIndex = hashMap[curr];
-            left = duplicateIndex + 1;
-            currentAnswer -= prefixSum[duplicateIndex];
+            while (left <= duplicateIndex) {
+              currentAnswer -= nums[left];
+              left += 1;
+            }
           }
           
           hashMap[curr] = right;
