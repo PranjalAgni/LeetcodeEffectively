@@ -1,56 +1,90 @@
-#include <unordered_map>
-using namespace std;
-
 class TrieNode {
-   public:
+  public:
     unordered_map<char, TrieNode*> children;
+    bool isEndOfWord;
+    
+    TrieNode() {
+      this->children = unordered_map<char, TrieNode*>();
+      this->isEndOfWord = false;
+    }
 };
 
-class SuffixTrie {
-   public:
+class Trie {
+  private:
+    TrieNode* getNodeIfExists(string& word) {
+      int len = word.length();
+      TrieNode* crawlNode = this->root;
+      for (int idx = 0; idx < len; idx++) {
+        char current = word[idx];
+        if (crawlNode->children.find(current) == crawlNode->children.end()) return NULL;
+        crawlNode = crawlNode->children[current];
+      }
+      
+      return crawlNode;
+    }
+  
+    void suggestWordsHelper(TrieNode* crawlNode, string word, vector<string>& suggestedWords) {
+      if (!crawlNode) return;
+      if (crawlNode->isEndOfWord) {
+        suggestedWords.push_back(word);
+      }
+      
+      for (const auto& [key, value]: crawlNode->children) {
+        suggestWordsHelper(value, word + key, suggestedWords);
+      }
+    }
+  public:
     TrieNode* root;
-    char endSymbol;
-
-    SuffixTrie(string str) {
-        this->root = new TrieNode();
-        this->endSymbol = '*';
-        this->populateSuffixTrieFrom(str);
+  
+    Trie() {
+      this->root = new TrieNode();
     }
-
-    void insertSubstringStartingAt(string str, int pos) {
-        int len = str.length();
-        TrieNode* crawlNode = this->root;
-        for (int idx = pos; idx < len; idx++) {
-            if (crawlNode->children.find(str[idx]) ==
-                crawlNode->children.end()) {
-                TrieNode* trieNode = new TrieNode();
-                crawlNode->children[str[idx]] = trieNode;
-            }
-            crawlNode = crawlNode->children[str[idx]];
+  
+    void insert(string& str) {
+      int len = str.length();
+      TrieNode* crawlNode = this->root;
+      for (int idx = 0; idx < len; idx++) {
+        char current = str[idx];
+        if (crawlNode->children.find(current) == crawlNode->children.end()) {
+          TrieNode* trieNode = new TrieNode();
+          crawlNode->children[current] = trieNode;
         }
-
-        crawlNode->children[this->endSymbol] = NULL;
+        
+        crawlNode = crawlNode->children[current];
+      }
+      
+      crawlNode->isEndOfWord = true;
     }
+  
+    vector<string> suggest(string& word) {
+      TrieNode* crawlNode = getNodeIfExists(word);
+      if (!crawlNode) return {};
+      vector<string> suggestedWords;
+      suggestWordsHelper(crawlNode, word, suggestedWords);
+      return suggestedWords;
+    }
+};
 
-    // Time: O(N * N) | Space: O(N * N)
-    // N = length of the string
-    void populateSuffixTrieFrom(string str) {
-        int len = str.length();
+class Solution {
+public:
+    vector<vector<string>> suggestedProducts(vector<string>& products, string searchWord) {
+        Trie* trie = new Trie();
+        for (string& product: products) {
+          trie->insert(product);
+        }
+      
+        int len = searchWord.length();
+        string text = "";
+        vector<vector<string>> suggestedWords;
         for (int idx = 0; idx < len; idx++) {
-            this->insertSubstringStartingAt(str, idx);
+          text += searchWord[idx];
+          vector<string> suggestWordSoFar = trie->suggest(text);
+          sort(suggestWordSoFar.begin(), suggestWordSoFar.end());
+          int numWords = suggestWordSoFar.size();
+          if (numWords > 3) suggestWordSoFar.resize(3);
+          suggestedWords.push_back(suggestWordSoFar);
         }
-    }
-
-    // Time: O(N)  | Space: O(1)
-    // N = length of the string
-    bool contains(string str) {
-        TrieNode* crawlNode = this->root;
-        for (char ch : str) {
-            if (crawlNode->children.find(ch) == crawlNode->children.end())
-                return false;
-            crawlNode = crawlNode->children[ch];
-        }
-        return crawlNode->children.find(this->endSymbol) !=
-               crawlNode->children.end();
+      
+        return suggestedWords;
     }
 };
