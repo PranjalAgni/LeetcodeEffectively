@@ -1,32 +1,29 @@
 // https://leetcode.com/problems/number-of-matching-subsequences/
 
 class Solution {
-private:
-    bool isSubsequence(string& str, string& target) {
-      int N = str.length();
-      int M = target.length();
-      if (M > N) return false;
-      
-      int start = 0;
-      int pos = 0;
-      while (start < N && pos < M) {
-        if (str[start] == target[pos]) {
-          pos += 1;
-        }
-        start += 1;
-      }
-      
-      return pos == M;
-    }
 public:
+    // Time: O(words.length() + s.length() * words.length()) | Space: O(s.length())
     int numMatchingSubseq(string s, vector<string>& words) {
-        int answer = 0;
+        unordered_map<char, vector<string>> hashMap;
         for (string& word: words) {
-          if (isSubsequence(s, word)) {
-            answer += 1;
-          }
+            char firstChar = word[0];
+            hashMap[firstChar].push_back(word);
         }
-      
+        
+        int answer = 0;
+        for (char& letter: s) {
+            vector<string> wordStartingWithLetter = hashMap[letter];
+            hashMap[letter] = {};
+            for (string& currentWord: wordStartingWithLetter) {
+                string newWord = currentWord.substr(1);
+                if (newWord.length() > 0) {
+                   hashMap[newWord[0]].push_back(newWord); 
+                } else {
+                    answer += 1;                     
+                }              
+            }
+        }
+        
         return answer;
     }
 };
