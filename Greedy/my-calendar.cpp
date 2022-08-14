@@ -9,7 +9,7 @@ public:
     
     // Time: O(N + K*logK) | Space: O(K)
     // N = total number of meetings time given
-    // K = total number of meetings without double booking
+    // K = total number of meetings without any double booking
     bool book(int start, int end) {
         int N = vp.size();
         for (int idx = 0; idx < N; idx++) {
