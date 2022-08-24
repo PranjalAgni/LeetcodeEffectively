@@ -2,7 +2,7 @@
 class Solution {
 public:
     // Time: O(1) | Space: O(1)
-    // Log based solution
+    // Log based solution and checking if number is integer
     bool isPowerOfFour(int num) {
         if (num == 0) return false;
         double expo = log(num)/log(4);
