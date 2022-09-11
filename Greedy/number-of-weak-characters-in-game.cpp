@@ -2,21 +2,22 @@
 
 class Solution {
 public:
+    static bool comp(vector<int>& a, vector<int>& b) {
+      if (a[0] == b[0]) {
+        return a[1] > b[1];
+      }
+      
+      return a[0] < b[0];
+    }
+  
     int numberOfWeakCharacters(vector<vector<int>>& properties) {
         int N = properties.size();
-        sort(properties.begin(), properties.end());
+        sort(properties.begin(), properties.end(), comp);
         int answer = 0;
-        int minAttack = INT_MAX;
-        // for (vector<int>& p: properties) {
-        //   cout << p[0] << " " << p[1] << endl;
-        // }
-        for (int idx = 1; idx < N; idx++) {
-          vector<int> previous = properties[idx - 1];
-          vector<int> current = properties[idx];
-          minAttack = min(minAttack, previous[1]);
-          if (previous[0] < current[0] && minAttack < current[1]) {
-            answer += 1;
-          }
+        int minAttack = INT_MIN;
+        for (int idx = N - 1; idx >= 0; idx--) {
+          if (properties[idx][1] < minAttack) answer += 1;
+          minAttack = max(minAttack, properties[idx][1]);
         }
         
         return answer;
