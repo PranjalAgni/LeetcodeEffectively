@@ -10,6 +10,7 @@ public:
       return a[0] < b[0];
     }
   
+    // Time: O(N * logN) | Space: O(1)
     int numberOfWeakCharacters(vector<vector<int>>& properties) {
         int N = properties.size();
         sort(properties.begin(), properties.end(), comp);
