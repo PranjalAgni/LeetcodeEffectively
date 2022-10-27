@@ -22,3 +22,14 @@ public:
       return false;
     }
 };
+
+/**
+    a%k = b%k
+    given b >= a
+    d = b - a (d is difference between b and a)
+    b = a + d
+
+    a%k = (a + d)%k
+    a%k = a%k + d%k
+    for this to be true d%k should be 0, it means d is multiple of k
+**/
