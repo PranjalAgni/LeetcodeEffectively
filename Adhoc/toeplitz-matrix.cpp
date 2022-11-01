@@ -1,6 +1,7 @@
 class Solution {
 public:
     // Time: O(rows * cols) | Space: O(rows * cols)
+    
     bool isToeplitzMatrix(vector<vector<int>>& matrix) {
         int rows = matrix.size();
         int cols = matrix[0].size();
