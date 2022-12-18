@@ -1,0 +1,26 @@
+// https://leetcode.com/problems/daily-temperatures/
+
+// Solution based on next greater element
+class Solution {
+public:
+    // Time: O(N) | Space: O(N)
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        int len = temperatures.size();  
+        vector<int> answer(len, 0);
+        stack<int> st;
+        
+        for (int idx = 0; idx < len; idx++) {
+          while(!st.empty() && temperatures[idx] > temperatures[st.top()]) {
+            answer[st.top()] = idx - st.top();
+            st.pop();
+          }
+          
+          st.push(idx);
+        }
+        
+        return answer;
+    }
+};
+
+
+
