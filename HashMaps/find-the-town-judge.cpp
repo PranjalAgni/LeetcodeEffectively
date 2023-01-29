@@ -7,6 +7,7 @@ public:
         unordered_map<int, vector<int>> trustMap;
         unordered_map<int, bool> isTrustSomeoneMap;
         
+        // mark as trusted 
         for (vector<int>& t: trust) {
           trustMap[t[1]].push_back(t[0]);
           isTrustSomeoneMap[t[0]] = true;
