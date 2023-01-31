@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/n-th-tribonacci-number/
 
-// Memoization solution
+// Memoization solution using dp
 class Solution {
 private:
     // Time: O(N) | Space: O(N)
