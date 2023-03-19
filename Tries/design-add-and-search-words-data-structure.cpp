@@ -11,6 +11,8 @@ public:
     }
     
     /** Adds a word into the data structure. */
+    // Time: O(m) | Space: O(26*m)
+    // m = length of the word 
     void addWord(string word) {
         WordDictionary* current = this;
         for (char c: word) {
@@ -25,6 +27,8 @@ public:
     }
     
     /** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */
+    // Time: O(m) | Space: O(1)
+    // m = length of the word
     bool search(string word) {
         WordDictionary* current = this;
         for(int idx = 0; idx < word.length(); idx++) {
