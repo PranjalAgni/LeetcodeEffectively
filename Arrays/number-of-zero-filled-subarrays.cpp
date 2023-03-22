@@ -1,5 +1,6 @@
 // https://leetcode.com/problems/number-of-zero-filled-subarrays/
 
+// Solved using numerical approach to calculate subarrays  
 class Solution {
 private:
     // Time: O(1) | Space: O(1)
