@@ -1,5 +1,18 @@
 // https://leetcode.com/problems/bulb-switcher/
 
+// Optimized solution
+// Time: O(logN) | Space: O(1)
+class Solution {
+public:
+    int bulbSwitch(int n) {
+      if (n == 0 || n == 1) return n;
+      return sqrt(n);
+    }
+};
+
+
+// Naive approach
+// Time: O(N) | Space: O(N)
 class Solution {
 public:
     int bulbSwitch(int n) {
