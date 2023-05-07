@@ -10,6 +10,7 @@ var areDeeplyEqual = function (o1, o2) {
     const typeO2 = typeof o2;
     if (typeO1 !== typeO2) return false;
     if (typeO1 !== "object" && typeO2 !== "object") {
+        console.log("This is a object");
         return JSON.stringify(o1) === JSON.stringify(o2);
     }
     const N = Object.keys(o1).length;
