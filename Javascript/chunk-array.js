@@ -5,7 +5,7 @@
  * @return {Array[]}
  */
 // Time: O(N) | Space: O(N)
-// N = length of size
+// N = length of array i.e. size
 var chunk = function (arr, size) {
     const N = arr.length;
     let pos = 1;
