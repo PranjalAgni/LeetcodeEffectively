@@ -9,39 +9,22 @@ Return the JSON representation.
 Note that the order of keys should be the same as the order returned by Object.keys().
 */
 
-// Currently the solution is WIP need to clean it as well
+// Recursive solution works by checking JS types (number, boolean, array, object)
 
 /**
  * @param {any} object
  * @return {string}
  */
-let answer = "{";
-function jsonStringifyRec(object) {
-   Object.entries(object).forEach(([key, value]) => {
-      answer += `"${key}"`;
-      if (value !== null && Array.isArray(value)) {
-        answer += "[";
-        value.forEach(elt => {
-          answer += String(elt) + ",";
-        });
-        answer += "]";
-      }
-      else if (value !== null && typeof value === "object") {
-        answer += `:{`
-        jsonStringifyRec(value);
-        answer += `}`
-        
-      }
-      else {
-        answer += `:${value},`;
-      }
-    });
-}
 
 var jsonStringify = function(object) {
-    const objType = typeof object;
-    if (objType !== "object") return object;
-    jsonStringifyRec(object);
-    answer += "}";
-    return answer;
+    if (object === null) return String(object);
+    if (typeof object === "boolean" || typeof object === "number") return object;
+    if (typeof object === "string") return `"${object}"`;
+    if (Array.isArray(object)) {
+       return "[" + object.map(elt => jsonStringify(elt)).join(",") + "]"; 
+    }
+  
+    if (typeof object === "object") {
+      return "{" + Object.keys(object).map(key => `"${key}":${jsonStringify(object[key])}`).join(",") + "}";
+    }
 };
