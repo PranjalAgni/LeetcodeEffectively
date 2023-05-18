@@ -25,6 +25,6 @@ var jsonStringify = function(object) {
     }
   
     if (typeof object === "object") {
-      return "{" + Object.keys(object).map(key => `"${key}":${jsonStringify(object[key])}`).join(",") + "}";
+      return `{${Object.keys(object).map(key => `"${key}":${jsonStringify(object[key])}`).join(",")}}`;
     }
 };
