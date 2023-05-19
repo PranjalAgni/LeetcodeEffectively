@@ -1,5 +1,6 @@
 // https://leetcode.com/problems/convert-object-to-json-string/
 
+// Nice JS interview problem
 // Example
 /**
 Input: object = {"y":1,"x":2}
