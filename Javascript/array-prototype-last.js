@@ -1,5 +1,7 @@
 // https://leetcode.com/problems/array-prototype-last/
 
+// Easy JS problem of polyfilling
+
 // Time: O(1) | Space: O(1)
 Array.prototype.last = function () {
     const N = this.length;
