@@ -1,6 +1,6 @@
 // https://leetcode.com/problems/call-function-with-custom-context/
 
-// TODO: Understand its usecases and attaching context to objects
+// Attaching this context to the object and calling the function which makes this refers to the object passed
 
 /**
  * @param {Object} context
