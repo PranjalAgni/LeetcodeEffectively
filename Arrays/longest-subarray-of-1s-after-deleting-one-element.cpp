@@ -27,4 +27,24 @@ public:
       
       return answer;
     }
+
+    // Time: O(N) | Space: O(1)
+    int longestSubarray(vector<int>& nums) {
+      int N = nums.size();
+      int count = 0;
+      int answer = 0;
+      int prevCount = -1;
+      for (int idx = 0; idx < N; idx++) {
+        if (nums[idx] == 0) {
+          answer = max(answer, count + prevCount);
+          prevCount = count;
+          count = 0;
+        } else {
+          count += 1;  
+        }
+      }
+      
+      answer = max(answer, prevCount + count);
+      return answer;
+    }
 };
