@@ -1,32 +1,30 @@
-// https://leetcode.com/problems/predict-the-winner/
+// https://leetcode.com/problems/predict-the-winner/submissions/
 
+// Very nice recursion + dp problem
 class Solution {
+private:
+    // Time: O(N*N) | Space: O(N)
+   int PredictWinnerRecursive(vector<int>& nums, int left, int right) {
+     if (left > right) return 0;
+     if (left == right) return nums[left];
+     
+     int currentScore = max(nums[left] + min(
+       PredictWinnerRecursive(nums, left + 2, right),
+       PredictWinnerRecursive(nums, left + 1, right - 1)
+     ), nums[right] + min(
+       PredictWinnerRecursive(nums, left + 1, right - 1),
+       PredictWinnerRecursive(nums, left, right - 2)
+     ));
+     
+     return currentScore;
+   }   
 public:
-    // Time: O(N) | Space: O(1)
     bool PredictTheWinner(vector<int>& nums) {
         int N = nums.size();
-        int left = 0;
-        int right = N - 1;
+        int total = 0;
+        for (int& num: nums) total += num;
+        int player1Score = PredictWinnerRecursive(nums, 0, N - 1);
         
-        int player1 = 0;
-        int player2 = 0;
-        int turn = 0;  
-      
-        while (left < right) {
-          int value = 0;
-          if (nums[left] >= nums[right]) {
-            value += nums[left];
-            left += 1;
-          } else {
-            value += nums[right];
-            right -= 1;
-          }
-          
-          if (turn % 2 == 0) player1 += value;
-          else player2 += value;
-          turn += 1;
-        }
-      
-        return player1 >= player2;
+        return player1Score >= total - player1Score;
     }
 };
