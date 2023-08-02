@@ -1,6 +1,8 @@
 // https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/
 
 // LCS but modified to find subsequence with max ascii sum
+// Time: 940ms (more than 50% faster than the previous solution)
+
 class Solution {
 private:
     int findLargestAsciiSumSubsequence(map<pair<int, int>, int>& cache, string& s1, string& s2, int N, int M) {
