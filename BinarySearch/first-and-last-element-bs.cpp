@@ -2,37 +2,60 @@
 
 // Currently wip solution
 class Solution {
-private:
-    int binarySearch(vector<int>& nums, int left, int right, int& target, int& start, int& end) {
-      if (left > right) return -1;
-      int mid = left + (right - left) / 2;
-      if (nums[mid] == target) {
-        int a = binarySearch(nums, left, mid - 1, target, start, end);
-        int b = binarySearch(nums, mid + 1, right, target, start, end);
-        cout << "Trying start = " << a << endl;
-        if (a != -1) start = min(start, a);
-        cout << "Trying end = " << b << endl;
-        if (b != -1) end = max(end, b);
-        return mid;
-      } else if (nums[mid] < target) {
-        return binarySearch(nums, mid + 1, right, target, start, end);
-      } else {
-        return binarySearch(nums, left, mid - 1, target, start, end);
-      }
-      
-      return -1;
-    }
 public:
-    // Time: O(logN) | Space: O(1)
     vector<int> searchRange(vector<int>& nums, int target) {
         int N = nums.size();
         int left = 0;
         int right = N - 1;
-        int start = INT_MAX;
-        int end = INT_MIN;
-        binarySearch(nums, left, right, target, start, end);
-        if (start == INT_MAX) start = -1;
-        if (end == INT_MIN) end = -1;
-        return {start, end};
+        int eltIdx = -1;
+        while (left < right) {
+          int mid = left + (right - left) / 2;
+          if (nums[mid] == target) {
+            eltIdx = mid;
+            break;
+          } else if (nums[mid] < target) {
+            left = mid + 1;
+          } else {
+            right = mid - 1;
+          }
+        }
+      
+        if (eltIdx == -1) return {-1, -1};
+          
+        // find the left min
+        int ansLeft = eltIdx;
+        left = 0;
+        right = eltIdx - 1;
+      
+        while (left <= right) {
+          int mid = left + (right - left) / 2;
+          if (nums[mid] == target) {
+            ansLeft = min(ansLeft, mid);
+            right = mid - 1;
+          } else if (nums[mid] < target) {
+            left = mid + 1;
+          } else {
+            right = mid - 1;
+          }
+        }
+              
+        // find the right max
+        int ansRight = eltIdx;
+        left = eltIdx + 1;
+        right = N - 1;
+        
+        while (left <= right) {
+          int mid = left + (right - left) / 2;
+          if (nums[mid] == target) {
+            ansRight = max(ansRight, mid);
+          } else if (nums[mid] < target) {
+            left = mid + 1;
+          } else {
+            right = mid - 1;
+          }
+        }
+        
+        return {ansLeft, ansRight};
+        
     }
 };
