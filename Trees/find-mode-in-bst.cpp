@@ -1,6 +1,7 @@
 // https://leetcode.com/problems/find-mode-in-binary-search-tree/
 
 // Follow up: Solve it without using extra space
+// Nice tree problem to try 
 
 class Solution {
 private:
