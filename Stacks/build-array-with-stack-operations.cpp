@@ -1,5 +1,8 @@
+// https://leetcode.com/problems/build-an-array-with-stack-operations/
+
 class Solution {
    public:
+    // Time: O(N) | Space: O(N)
     vector<string> buildArray(vector<int>& target, int n) {
         const string PUSH = "Push";
         const string POP = "Pop";
