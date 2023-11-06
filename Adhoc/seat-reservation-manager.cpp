@@ -2,33 +2,25 @@
 
 class SeatManager {
 public:
-    list<int> unreservedList;
+    priority_queue<int, vector<int>, greater<int>> pq;
     SeatManager(int n) {
-        unreservedList = list<int>();
+        pq = priority_queue<int, vector<int>, greater<int>>();
         for (int seatId = 1; seatId <= n; seatId++) {
-          unreservedList.push_back(seatId);
+          pq.push(seatId);
         }   
     }
     
+    // Time: O(logN)
+    // have to heapify again after removing top
     int reserve() {
-        int seatId = unreservedList.front();
-        unreservedList.pop_front();
+        int seatId = pq.top();
+        pq.pop();
         return seatId;
     }
     
+    // Time: O(logN) insertion
     void unreserve(int seatNumber) {
-        int firstSeatId = unreservedList.front();
-        if (seatNumber < firstSeatId) {
-          unreservedList.push_front(seatNumber);
-        } else {
-          auto itr = unreservedList.begin();
-          int advance = (seatNumber - firstSeatId);
-          while(advance-- > 0) {
-            itr++;
-          }
-          
-          unreservedList.insert(itr, 1, seatNumber);
-        }
+        pq.push(seatNumber);
     }
 };
 
@@ -38,10 +30,3 @@ public:
  * int param_1 = obj->reserve();
  * obj->unreserve(seatNumber);
  */
-
-
-// [1,2,3,4,5,6,7]
-// 123 ->4567
-// 14567
-// r,u,r,u,r,u,r,r,r,u,r,r,r,r
-// [],[1],[],[1],[],[1],[],[],[],[1],[],[],[],[]
