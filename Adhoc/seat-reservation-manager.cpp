@@ -30,3 +30,44 @@ public:
  * int param_1 = obj->reserve();
  * obj->unreserve(seatNumber);
  */
+
+
+ // Optimizing further:
+
+ class SeatManagerOptimized {
+public:
+    priority_queue<int, vector<int>, greater<int>> unreservedList;
+    int lastSeat;
+    SeatManager(int n) {
+        unreservedList = priority_queue<int, vector<int>, greater<int>>();
+      lastSeat = 0;
+    }
+    
+    int reserve() {
+        if (unreservedList.empty()) {
+          lastSeat += 1;
+          return lastSeat;
+        }
+      
+        int seatId = unreservedList.top();
+        unreservedList.pop();
+        return seatId;
+      
+    }
+    
+    void unreserve(int seatNumber) {
+        if (lastSeat == seatNumber) {
+          lastSeat -= 1;
+        } else {
+          unreservedList.push(seatNumber);
+        }
+    }
+};
+
+/**
+ * Your SeatManager object will be instantiated and called as such:
+ * SeatManager* obj = new SeatManager(n);
+ * int param_1 = obj->reserve();
+ * obj->unreserve(seatNumber);
+ */
+
