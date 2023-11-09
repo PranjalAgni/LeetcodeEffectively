@@ -1,5 +1,6 @@
 // https://leetcode.com/problems/eliminate-maximum-number-of-monsters/
 
+// Nice sorting problem
 class Solution {
 public:
     // Time: O(N*log(N)) | Space: O(N)
