@@ -1,3 +1,5 @@
+// https://leetcode.com/problems/count-number-of-homogenous-substrings/?envType=daily-question
+
 class Solution {
   public: int countHomogenous(string s) {
     int N = s.length();
