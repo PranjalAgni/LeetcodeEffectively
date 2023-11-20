@@ -3,6 +3,7 @@
 // Currently WIP problem
 class Solution {
 private:
+    // Time: O(N) | Space: O(N)
     vector<int> getPrefixSum(vector<int>& travel, int& N) {
       vector<int> prefixSum(N);
       prefixSum[0] = 0;
@@ -11,19 +12,29 @@ private:
       }
       
       return prefixSum;
-    }  
+    }
+    
+    // Time: O(1) | Space: O(1)
+    int computeExtraTime(vector<int>& prefixSum, int lastSeenAt, int currentIdx) {
+      int distance = currentIdx - lastSeenAt;
+      if (distance < 2) return 0;
+      int timeToReachLastPosition = prefixSum[currentIdx - 1] - prefixSum[lastSeenAt];
+      return timeToReachLastPosition;
+    }
 public:
+    // Time: O(N*max(garbage[i].length)) | Space: O(N)
+    // Storing last seen position of types of garbage and calculating distance if it's seen in future
+    // Concurrently computing time taken to collect specific type of garbage & storing it separately
+    // Adding back all the 3 time's computed
+    // And that's it :)
+    
     int garbageCollection(vector<string>& garbage, vector<int>& travel) {
         int N = garbage.size();
         vector<int> prefixSum = getPrefixSum(travel, N);
-        int lastIndexMetalScene = 0;
-        int lastIndexPaperScene = 0;
-        int lastIndexGarbageScene = 0;
       
-        int timeMetal = 0;
-        int timePaper = 0;
-        int timeGarbage = 0;
-        
+        vector<int> timeList(3, 0);
+        vector<int> seenList(3, 0);
+      
         for (int idx = 0; idx < N; idx++) {
           int metalCollected = 0;
           int paperCollected = 0;
@@ -40,53 +51,33 @@ public:
           }
           
           if (metalCollected > 0) {
-            timeMetal += metalCollected;
+            timeList[0] += metalCollected;
             if (idx >= 1) {
-              int diff = idx - lastIndexMetalScene;
-              int extraTime = 0;
-              if (diff > 1) {
-                extraTime = prefixSum[idx - 1] - prefixSum[lastIndexMetalScene];
-              }
-              
-              timeMetal += extraTime + travel[idx - 1];
-              
+              int extraTime = computeExtraTime(prefixSum, seenList[0], idx);
+              timeList[0] += extraTime + travel[idx - 1];
             }
-            lastIndexMetalScene = idx;
+            seenList[0] = idx;
           }
 
           if (paperCollected > 0) {
-            timePaper += paperCollected;
+            timeList[1] += paperCollected;
             if (idx >= 1) {
-              int diff = idx - lastIndexPaperScene;
-              int extraTime = 0;
-              if (diff > 1) {
-                extraTime = prefixSum[idx - 1] - prefixSum[lastIndexPaperScene];
-              }
-              
-              timePaper += extraTime + travel[idx - 1];
-              
+              int extraTime = computeExtraTime(prefixSum, seenList[1], idx);
+              timeList[1] += extraTime + travel[idx - 1];
             }
-            lastIndexPaperScene = idx;
+            seenList[1] = idx;
           }
 
           if (garbageCollected > 0) {
-            timeGarbage += garbageCollected;
+            timeList[2] += garbageCollected;
             if (idx >= 1) {
-              int diff = idx - lastIndexGarbageScene;
-              int extraTime = 0;
-              if (diff > 1) {
-                extraTime = prefixSum[idx - 1] - prefixSum[lastIndexPaperScene];
-              }
-              
-              cout << "Extra time taken: " << extraTime;
-              
-              timeGarbage += extraTime + travel[idx - 1];
-              
+              int extraTime = computeExtraTime(prefixSum, seenList[2], idx);
+              timeList[2] += extraTime + travel[idx - 1];
             }
-            lastIndexGarbageScene = idx;
+            seenList[2] = idx;
           }
         }
       
-        return timeMetal + timePaper + timeGarbage;
+        return timeList[0] + timeList[1] + timeList[2];
     }
 };
