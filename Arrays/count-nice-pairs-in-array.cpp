@@ -1,4 +1,5 @@
 // https://leetcode.com/problems/count-nice-pairs-in-an-array/
+// nice array problem
 class Solution {
 private:
     vector<int> getReversed(vector<int>& nums) {
