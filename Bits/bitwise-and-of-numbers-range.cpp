@@ -3,6 +3,7 @@
 class Solution {
 public:
     // Time: O(N) | Space: O(1)
+    // some update
     int rangeBitwiseAnd(int left, int right) {
         while(right > left) {
           right &= (right - 1);
