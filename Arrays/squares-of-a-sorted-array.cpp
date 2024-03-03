@@ -1,5 +1,6 @@
 // https://leetcode.com/problems/squares-of-a-sorted-array/?envType=daily-question&envId=2024-03-02
 
+// can we solve it without inbuilt sort method
 class Solution {
 public:
     // Time: O(N*logN) | Space: O(1)
