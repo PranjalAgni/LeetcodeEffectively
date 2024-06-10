@@ -1,29 +1,43 @@
 // https://leetcode.com/problems/continuous-subarray-sum/
 
+// Time: O(N) | Space: O(N) 
 class Solution {
 public:
-    // Time: O(N) | Space: O(1)
     bool checkSubarraySum(vector<int>& nums, int k) {
-      unordered_map<int, int> hashMap;
-      hashMap[0] = -1;
-      int preSum = 0;
-      int N = nums.size();
-      
-      for (int idx = 0; idx < N; idx++) {
-        preSum += nums[idx];
-        if (hashMap.find(preSum % k) != hashMap.end()) {
-          int pos = hashMap[preSum % k];
-          if ((idx - pos) > 1) return true;
-        } else {
-          hashMap[preSum % k] = idx;
+        int N = nums.size();
+        unordered_map<int, int> hashMap;
+        hashMap[0] = -1;
+        int preSum = 0;
+        for (int idx = 0; idx < N; idx++) {
+          preSum += nums[idx];
+          int rem = preSum % k;
+          if (hashMap.find(rem) != hashMap.end()) {
+            int prevPos = hashMap[rem];
+            if ((idx - prevPos) >= 2) return true;
+          } else {
+            hashMap[rem] = idx;
+          }
         }
-      }
       
-      return false;
+        return false;
     }
 };
-
 /**
+  [Update June 10 2024]
+  Theory explanation: Approach is if the mod repeats that means, 
+  we have found a subarray which will be multiple of K because for the mod to repeat
+  it is possible only if something which we have added divided by k is 0
+
+  example: [23,2,4,6,7]
+  index =  0  1  2  3  4
+  prefix = 23 25 29 35 42
+  mods =   5  1  5  5  0
+
+  see mod=5 repeats at index 2 again
+  this is because we have added 2,4 whose mod is 0 as its multiple of k
+
+
+  [October 27 2022]
     a%k = b%k
     given b >= a
     d = b - a (d is difference between b and a)
