@@ -1,5 +1,7 @@
 // https://leetcode.com/problems/sum-of-square-numbers/submissions/
 
+// Time: O(sqrt(c) * log(c)) | Space: O(1)
+// The operation sqrt(x) takes O(logX)
 class Solution {
 public:
     bool judgeSquareSum(int c) {
