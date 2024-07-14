@@ -1,6 +1,8 @@
 // https://leetcode.com/problems/reverse-substrings-between-each-pair-of-parentheses/
 
-// Time: O(N) | Space: O(N)
+// Check its fast solution using wormhole teleportation method
+
+// Time: O(N*N) | Space: O(N)
 class Solution {
 public:
     string reverseParentheses(string s) {
@@ -36,5 +38,3 @@ public:
        return answer;
     }
 };
-
- 
