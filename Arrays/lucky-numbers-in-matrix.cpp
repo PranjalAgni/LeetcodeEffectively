@@ -7,7 +7,6 @@ public:
         int rows = matrix.size();
         int cols = matrix[0].size();
         vector<int> rowMin(rows);
-      
         vector<int> colMax(cols);
       
         for (int row = 0; row < rows; row++) {
