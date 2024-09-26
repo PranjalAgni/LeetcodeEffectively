@@ -2,35 +2,33 @@
 
 class Solution {
 private:
-    bool isPrefix(int num1, int num2) {
-      int start1 = 10;
-      int start2 = 10;
-      while (start1 < num1 || start2 < num2) {
-        if (start1 < num1) {
-          start1 *= 10;
-        }
-        
-        if (start2 < num2) {
-          start2 *= 10;
-        }
-      }
-      
-      if (start1 != 10) start1 /= 10;
-      if (start2 != 10) start2 /= 10;
-      
-       return (num1 % start1) == (num2 % start2);
+    int getLength(int& num) {
+        string str = to_string(num);
+        return str.length();
     }
-  
-  
 public:
     int longestCommonPrefix(vector<int>& arr1, vector<int>& arr2) {
-        int answer = 0;
-        for (int& num1: arr1) {
-          for (int& num2: arr2) {
-            if (isPrefix(num1, num2)) answer += 1;
-          }
+        int N = arr1.size();
+        unordered_set<int> prefixSet;
+        for (int& elt: arr1) {
+            while (elt != 0) {
+                prefixSet.insert(elt);
+                elt /= 10;
+            }
         }
-      
+        
+        int answer = 0;
+        for (int& elt: arr2) {
+            while (elt != 0) {
+                if (prefixSet.find(elt) != prefixSet.end()) {
+                    answer = max(answer, getLength(elt));
+                    break;
+                }
+                
+                elt /= 10;
+            }
+        }
+        
         return answer;
     }
 };
