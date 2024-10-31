@@ -1,5 +1,7 @@
-// https://leetcode.com/problems/maximum-number-of-moves-in-a-grid/?envType=daily-question&envId=2024-10-29
+// https://leetcode.com/problems/maximum-number-of-moves-in-a-grid/
+// Clean BFS approach O(V + E) where E = 3
 
+// Time: O(N) | Space: O(N)
 class Solution {
 private:
     bool isValid(int row, int col, int& rows, int& cols) {
@@ -10,8 +12,8 @@ private:
     int bfs(vector<vector<int>>& grid, vector<vector<int>>& cache, int& rows, int&     cols) {
         int answer = 0;
         queue<vector<int>> q;
-        for (int col = 0; col < cols; col++) {
-            q.push({0, col, 1});
+        for (int row = 0; row < rows; row++) {
+            q.push({row, 0, 0});
         }
         
         vector<vector<int>> directions = {{-1, 1}, {0, 1}, {1, 1}};
@@ -19,6 +21,7 @@ private:
         while(!q.empty()) {
             vector<int> entry = q.front();
             q.pop();
+            if (cache[entry[0]][entry[1]] == 1) continue;
             cache[entry[0]][entry[1]] = 1;
             answer = max(answer, entry[2]);
             for (vector<int>& dir: directions) {
@@ -39,13 +42,5 @@ public:
         vector<vector<int>> cache(rows, vector<int>(cols, 0));
         
         return bfs(grid, cache, rows, cols);
-        
     }
 };
-
-
-/**
-row - 1, col + 1 => upper right diag
-row, col + 1 => right
-row + 1, col + 1 => lower right diag
-**/
