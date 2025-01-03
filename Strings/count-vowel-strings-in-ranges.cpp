@@ -2,7 +2,7 @@
 
 // Time : O(N + Q) | Space : O(N) 
 // We can just preprocess the vowels and then answer the queries in O(1) constant time
-
+number-of-ways-to-split-arra
 class Solution {
 private:
     bool isVowel(char& ch) {
