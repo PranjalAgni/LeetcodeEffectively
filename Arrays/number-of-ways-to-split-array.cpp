@@ -1,3 +1,6 @@
+// https://leetcode.com/problems/number-of-ways-to-split-array/
+// Time: O(N) | Space: O(N)
+// We can use prefix sum and suffix sum to solve this problem
 class Solution {
 private:
     vector<long long> getPrefixSum(vector<int>& nums) {
