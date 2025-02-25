@@ -3,6 +3,7 @@
 class Solution {
   public:
     int mostProfitablePath(vector<vector<int>>& edges, int bob, vector<int>& amount) {
+      unordered_map<int, vector<int>> graph;
         // how to solve this problem 
         // with dfs + bfs
 
