@@ -13,60 +13,44 @@ class Solution {
                 if (isVowel(ch)) {
                     if (letters[idx] > 0) totalVowels += 1;
                 } else {
-                    if (letters[idx] > 0) consonants += 1;
+                    if (letters[idx] > 0) consonants += letters[idx];
                 }
             }
     
-            return totalVowels == 5 && consonants == k;
+            return totalVowels == 5 && consonants >= k;
             
         }
-    public:
-        long long countOfSubstrings(string word, int k) {
+        // computes total substrings having each vowel atleast once and atleast k consonants
+        long long computeTotalSubstrings(string& word, int k) {
             int N = word.length();
             int left = 0;
             int right = 0;
-            int consonants = 0;
             vector<int> letters(26, 0);
             long long answer = 0;
-            
-            // sliding window approach
+    
             while (right < N) {
-                char ch = word[right];
-                int pos = ch - 'a';
-                letters[pos] += 1;
-                if (!isVowel(ch)) {
-                    consonants += 1;
-                }
-    
-                // updating letters so we can remove extra consonants
-                while (consonants > k && left < right) {
-                    char currChar = word[left];
-                    int letterPos = currChar - 'a';
-                    letters[letterPos] -= 1;
-    
-                    if (!isVowel(currChar)) {
-                        consonants -= 1;               
-                    }
-    
+                letters[word[right] - 'a'] += 1;
+                while (isValid(letters, k)) {
+                    // this takes care of counting all the substrings
+                    answer += N - right;
+                    letters[word[left] - 'a'] -= 1;
                     left += 1;
                 }
     
-                if (isValid(letters, k)) { 
-                    string correct = word.substr(left, right - left + 1);
-                    // cout << "consonants = " << consonants << "left = " << left << "right = " << right << endl;
-                    cout << "this ans = " << correct << endl;
-                    answer += 1;
-                }
                 right += 1;
             }
     
             return answer;
         }
+    public:
+        long long countOfSubstrings(string word, int k) {
+            // we can compute the answer using this analogy
+            // exactly(k) = atleast(k) - atleast(k + 1)
+            // explanation:
+            // atleast(k) = (k + 0) + (k + 1) + (k + 2) + ... (k + x)
+            // atleast(k + 1) = (k + 1) + (k + 2) + (k + 3) + ... (k + x)
+            // so exactly(k) will always have substrings with k consonants
+            return computeTotalSubstrings(word, k) - computeTotalSubstrings(word, k + 1);
+        }
     };
     
-    // thoughts
-    // so I am missing one edge case
-    // whenever I find a valid string it can happen that it has more valid substrings inside it
-    // I need to count it and add it to the answer
-    
-    //
