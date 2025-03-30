@@ -1,6 +1,27 @@
 // https://leetcode.com/problems/partition-labels/
 
+// TC: O(NlogN) | SC: O(N)
 class Solution {
+private:
+    vector<vector<int>> mergeIntervals(vector<vector<int>>& slots) {
+        sort(slots.begin(), slots.end());
+        int N = slots.size();
+        int pos = 0;
+
+        vector<vector<int>> answer;
+        answer.push_back(slots[pos]);
+        
+        for (int idx = 1; idx < N; idx++) {
+            if (answer[pos][1] >= slots[idx][0]) {
+                answer[pos][1] = max(slots[idx][1], answer[pos][1]);
+            } else {
+                answer.push_back(slots[idx]);
+                pos += 1;
+            }
+        }
+
+        return answer;
+    }
 public:
     vector<int> partitionLabels(string s) {
         int N = s.length();
@@ -21,28 +42,13 @@ public:
             slots.push_back(it.second);
         }
 
-        sort(slots.begin(), slots.end());
+        vector<vector<int>> merged = mergeIntervals(slots);
+        vector<int> answer;
 
-        vector<vector<int>> merged;
-        merged.push_back(slots[0]);
-        int pos = 0;
-        for (int idx = 1; idx < slots.size(); idx++) {
-            if (merged[pos][1] >= slots[idx][0]) {
-                merged[pos][1] = max(slots[idx][1], answer[pos][1]);
-            } else {
-                merged.push_back(intervals[idx]);
-                pos += 1;
-            }
+        for (vector<int>& m: merged) {
+            answer.push_back(m[1] - m[0] + 1);
         }
 
-
-
-
-        for (vector<int>& slot: merged) {
-            cout << slot[0] << " " << slot[1] << endl;
-        }
-
-
-        return {42}; 
+        return answer;
     }
 };
