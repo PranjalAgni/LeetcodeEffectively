@@ -15,7 +15,7 @@ public:
             string word = words[idx];
             int groupId = groups[idx];
             if (groupId == groups[idx - 1]) {
-                // its closing here
+                // its closing here we should compute max length
                 int currentLength = idx - start;
                 if (currentLength > maxLength) {
                     maxLength = currentLength;
