@@ -1,5 +1,9 @@
 // https://leetcode.com/problems/minimum-number-of-people-to-teach/
 
+
+// Time: O(M*L + M*L + n*T) | Space: O(M*L)
+// where M=people, L=avg languages per person, F=friendships, T=people needing teaching.
+
 class Solution {
 private:
     vector<unordered_set<int>> buildWithLanguages(vector<vector<int>>& languages) {
