@@ -1,7 +1,8 @@
 // https://leetcode.com/problems/successful-pairs-of-spells-and-potions/
 
-// Time: O(N * log(N)) | Space: O(N)
-// N = len(potions)
+// Time: O(M*log(M)) + N*log(M) | Space: O(N)
+// N = len(spells)
+// M = len(potions)
 class Solution {
 private:
     int binarySearch(vector<int>& potions, int& M, int current, long long& success) {
@@ -9,12 +10,12 @@ private:
         int right = M;
 
         int ans = -1;
-        while (left <= right) {
+        while (left < right) {
             int mid = left + (right - left) / 2;
             long long prod = (long long) potions[mid] * current;
             if (prod >= success) {
                 ans = mid;
-                right = mid - 1;
+                right = mid;
             } else {
                 left = mid + 1;
             }
