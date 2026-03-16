@@ -1,41 +1,66 @@
 // https://leetcode.com/problems/fancy-sequence/
 
-class Fancy {
+class Fancy { 
 private:
     vector<long long> data;
-    int pos;
-    int N;
     int MOD;
+    struct Operation {
+        int type;
+        int val;
+        int range;
+    };
+    vector<Operation> operations;
 public:
     Fancy() {
-        N = int(1e5);
-        data = vector<long long>(N, 0);
-        pos = -1;
+        data = vector<long long>();
+        operations = vector<Operation>();
         MOD = int(1e9) + 7;
     }
     
     void append(int val) {
-        pos += 1;
-        data[pos] = val;
+        data.push_back(val);
     }
     
     void addAll(int inc) {
-        if (pos < 0) return;
-        for (int idx = 0; idx <= pos; idx++) {
-            data[idx] += (inc % MOD);
-        }
+        int N = data.size();
+        operations.push_back({1, inc, N});
+    }
+
+    void add(int pos, int inc, long long& answer) {
+        answer += (inc % MOD);
     }
     
     void multAll(int m) {
-        if (pos < 0) return;
-        for (int idx = 0; idx <= pos; idx++) {
-            data[idx] *= m;
-            data[idx] %= MOD;
-        }
+        int N = data.size();
+        operations.push_back({2, m, N});
+    }
+
+    void mult(int pos, int m, long long& answer) {
+        answer *= (m % MOD);
+        answer %= MOD;
     }
     
     int getIndex(int idx) {
-        return idx > pos ? -1 : (data[idx] % MOD);
+        int N = data.size();
+        if (idx >= N) return -1;
+        return compute(idx);
+    }
+
+    int compute(int idx) {
+        long long answer = data[idx];
+        int N = data.size();
+        for (Operation& op: operations) {
+            if (idx >= op.range) {
+                continue;
+            }
+            if (op.type == 1) {
+                add(idx, op.val, answer);
+            } else {
+                mult(idx, op.val, answer);
+            }
+        }
+
+        return answer % MOD;
     }
 };
 
