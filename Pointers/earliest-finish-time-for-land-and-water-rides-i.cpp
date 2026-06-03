@@ -1,6 +1,7 @@
 // https://leetcode.com/problems/earliest-finish-time-for-land-and-water-rides-i/
 
 // this is brute force approach we will optimise it
+// check the second part of this to see the optimal approach earliest-finish-time-for-land-and-water-rides-ii.cpp
 class Solution {
 public:
     // this is brute force solution
