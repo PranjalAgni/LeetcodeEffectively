@@ -1,6 +1,7 @@
 // https://leetcode.com/problems/earliest-finish-time-for-land-and-water-rides-ii/
 
 // TC: O(N) | SC: O(N)
+// good problem
 class Solution {
 private:
     int solve(vector<int>& ride1, vector<int>& duration1, vector<int>& ride2, vector<int>& duration2) {
