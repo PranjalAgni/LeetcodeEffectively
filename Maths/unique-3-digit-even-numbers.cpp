@@ -1,40 +1,29 @@
 // https://leetcode.com/problems/unique-3-digit-even-numbers/
 
-// Time: O(N) | Space: O(N)
+// Time: O(N) | Space: O(1)
 class Solution {
-private:
-    int fact(int x) {
-        int prod = x;
-        for (int p = x - 1; p >= 1; p--) {
-            prod *= p;
-        }
-
-        return prod;
-    }
 public:
     int totalNumbers(vector<int>& digits) {
-        unordered_map<int, int> freqMap;
+        vector<int> freq(10, 0);
         for (int& d: digits) {
-            freqMap[d] += 1;
-        }
+            freq[d] += 1;
+        }        
 
-        int cnt = 0;
-        for (auto& it: freqMap) {
-            if (it.second == 1) {
-                cnt += 1;
+        int answer = 0;
+        for (int h = 1; h <= 9; h++) {
+            if (freq[h] == 0) continue;
+            freq[h] -= 1;
+            for (int t = 0; t <= 9; t++) {
+                if (freq[t] == 0) continue;
+                freq[t] -= 1;
+                for (int u = 0; u <= 8; u += 2) {
+                    if (freq[u] > 0) answer += 1;
+                }
+                freq[t] += 1;
             }
+            freq[h] += 1;
         }
 
-        if (cnt < 3) return cnt;
-
-        return fact(cnt) / 6;
+        return answer;
     }
 };
-
-
-// 1,2,3,4
-// 123
-// 134
-// 
-
-
