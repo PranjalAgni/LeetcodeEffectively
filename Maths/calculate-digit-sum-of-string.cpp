@@ -1,3 +1,7 @@
+// https://leetcode.com/problems/calculate-digit-sum-of-a-string/?envType=daily-question&envId=2026-11-16
+
+// Time: O(N * N) | Space: O(N)
+// N = length of string
 class Solution {
 private:
     // Time: O(N) | Space: O(N)
@@ -31,12 +35,10 @@ private:
       return sum;
     }
 public:
-    // Time: O(N * N) | Space: O(N)
-    // N = length of string
     string digitSum(string s, int k) {
       int N = s.length();
       if (k >= N) return s;
-      while (s.length() > k) {
+      while (N > k) {
           vector<string> chunks = divideInChunksOfK(s, k);
           string answer = "";
           for (string& chunk: chunks) {
@@ -45,6 +47,7 @@ public:
           }
         
           s = answer;
+          N = s.length();
       }
       
       return s;
