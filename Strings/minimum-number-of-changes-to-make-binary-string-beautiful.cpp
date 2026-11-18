@@ -2,6 +2,7 @@
 
 // Time: O(N) | Space: O(1)
 // Just make pairs of 2 so length of substring will be even always and flip if pairs are not equal
+// Revisited this in 2026 need to understand again
 class Solution {
 public:
     int minChanges(string s) {
